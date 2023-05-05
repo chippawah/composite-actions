@@ -18,7 +18,7 @@ inputs:
     default: "BAR_image_repo"
 outputs:
   tagged_image:
-    value: $${{ steps.set_the_output.outputs.tagged_image }}
+    value: ${{ steps.set_the_output.outputs.tagged_image }}
 runs:
   using: "composite"
   steps:
