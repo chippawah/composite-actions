@@ -29,13 +29,13 @@ runs:
         ref: ${{ inputs.github_ref }}
     - name: Echo the input image name
       id: echo_the_image
-      run: echo ${{ inputs.tagged_image }}
+      run: echo "${{ inputs.tagged_image }}"
       shell: bash
     - name: 'Find and Replace Image Definition'
       id: find_and_replace
       uses: jacobtomlinson/gha-find-replace@v3
       with:
-        find: 'image: *'
+        find: 'image: .*'
         replace: "image: \"${{ inputs.tagged_image }}\""
         include: ${{ inputs.deployment_yaml_path }}
         regex: true
