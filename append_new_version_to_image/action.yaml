@@ -31,5 +31,7 @@ runs:
       shell: bash
     - name: Set the output
       id: set_the_output
-      run: echo "tagged_image=${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}" >> $GITHUB_OUTPUT
+      run: |
+        CONCATENATED_VERSION=${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}
+        echo "tagged_image=$CONCATENATED_VERSION" >> $GITHUB_OUTPUT
       shell: bash
