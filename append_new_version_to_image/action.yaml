@@ -10,9 +10,9 @@ inputs:
     description: 'The registry where the image repository is.'
     type: string
     required: true
-    default: 'FOO_image_registry'
+    default: 'FOO_image_registry.com'
   repository:
-    description: 'The repository name for the image'
+    description: 'The repository name for the image.'
     type: string
     required: true
     default: 'BAR_image_repo'
