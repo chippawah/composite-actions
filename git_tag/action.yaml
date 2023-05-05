@@ -1,0 +1,17 @@
+name: "Git tag"
+description: "Tags the git repository with the current version number"
+
+inputs:
+  repo_version:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: 'Tag Git repo with new version number'
+      run: |
+        echo ${{ inputs.repo_version }}
+        git tag ${{ inputs.repo_version }}
+        git push origin --tags
+      shell: bash

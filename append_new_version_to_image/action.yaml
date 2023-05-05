@@ -1,0 +1,44 @@
+name: "Find and Replace Image"
+description: "Tags the git repository with the current version number"
+inputs:
+  version:
+    description: 'The version for the tag'
+    type: string
+    required: true
+    default: 'latest'
+  registry:
+    description: 'The registry where the image repository is.'
+    type: string
+    required: true
+  repository:
+    description: 'The repository name for the image'
+outputs:
+  tagged_image:
+    value: $${{ jobs.set_image_name.outputs.tagged_image }}
+runs:
+  using: "composite"
+  steps:
+    - name: Echo the input
+      id: echo_the_input
+      run: |
+        echo "Input Version: ${{ inputs.version }}"
+        echo "Input Registry: ${{ inputs.registry }}"
+        echo "Input Repository: ${{ inputs.repository }}"
+      shell: bash
+    - name: Echo the output file var path
+      id: echo_the_output_file_var
+      run: |
+        echo "GITHUB_OUTPUT env var: $GITHUB_OUTPUT"
+      shell: bash
+    - name: Cat the output file before update
+      id: cat_the_output_var
+      run: cat $GITHUB_OUTPUT
+      shell: bash
+    - name: Set the output
+      id: set_the_output
+      run: echo "tagged_image=${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Print the output file after update
+      id: cat_the_output_after_setting
+      run: cat $GITHUB_OUTPUT
+      shell: bash

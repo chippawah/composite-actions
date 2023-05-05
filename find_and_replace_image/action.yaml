@@ -1,0 +1,44 @@
+name: "Find and Replace Image"
+description: "Tags the git repository with the current version number"
+inputs:
+  tagged_image:
+    required: true
+    type: string
+    description: 'The full image name including registry, repo, and tag.'
+  deployment_yaml_path:
+    description: 'The path to the deployment.yaml file that defines the image used for the container'
+    required: true
+    type: string
+    default: 'kustomize/overlays/dev/deployment.yaml'
+  github_ref:
+    description: 'The ref that will be used to pull the repo.'
+    required: true
+    type: string
+  repo_rw_token:
+    description: 'A read/ write token that will be used to pull the repo and commit the changed file after update.'
+    required: true
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - name: 'Checkout Source Code'
+      id: checkout_source_code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ inputs.repo_rw_token }}
+        ref: ${{ inputs.github_ref }}
+    - name: 'Find and Replace Image Definition'
+      id: find_and_replace
+      uses: jacobtomlinson/gha-find-replace@v3
+      with:
+        find: 'image: .*'
+        replace: 'image: "${{ inputs.tagged_image }}"'
+        include: ${{ inputs.deployment_yaml_path }}
+        regex: true
+    - name: 'Echo the changed file'
+      id: echo_changes
+      run: cat test_change_file.yaml
+      shell: bash
+    - name: 'Commit the Change'
+      id: commit_the_change
+      uses: stefanzweifel/git-auto-commit-action@v4
