@@ -29,7 +29,7 @@ runs:
         ref: ${{ inputs.github_ref }}
     - name: Echo the input image name
       id: echo_the_image
-      run: echo "${{ inputs.tagged_image }}"
+      run: "echo \"Replacing existing image with: ${{ inputs.tagged_image }}\""
       shell: bash
     - name: 'Find and Replace Image Definition'
       id: find_and_replace
