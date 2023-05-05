@@ -14,7 +14,7 @@ inputs:
     description: 'The repository name for the image'
 outputs:
   tagged_image:
-    value: $${{ jobs.set_image_name.outputs.tagged_image }}
+    value: $${{ steps.set_the_output.outputs.tagged_image }}
 runs:
   using: "composite"
   steps:
