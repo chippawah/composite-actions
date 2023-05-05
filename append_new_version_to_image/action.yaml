@@ -10,8 +10,12 @@ inputs:
     description: 'The registry where the image repository is.'
     type: string
     required: true
+    default: 'FOO_image_registry'
   repository:
     description: 'The repository name for the image'
+    type: string
+    required: true
+    default: 'BAR_image_repo'
 outputs:
   tagged_image:
     value: $${{ steps.set_the_output.outputs.tagged_image }}
