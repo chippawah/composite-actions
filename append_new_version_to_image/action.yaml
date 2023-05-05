@@ -19,8 +19,6 @@ inputs:
 outputs:
   tagged_image:
     value: ${{ steps.set_the_output.outputs.tagged_image }}
-    type: string
-    description: "The full image name including the resgistry, repo, and tag"
 runs:
   using: "composite"
   steps:
