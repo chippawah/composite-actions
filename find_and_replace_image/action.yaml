@@ -10,23 +10,9 @@ inputs:
     required: true
     type: string
     default: 'kustomize/overlays/dev/deployment.yaml'
-  github_ref:
-    description: 'The ref that will be used to pull the repo.'
-    required: true
-    type: string
-  repo_rw_token:
-    description: 'A read/ write token that will be used to pull the repo and commit the changed file after update.'
-    required: true
-    type: string
 runs:
   using: "composite"
   steps:
-    - name: 'Checkout Source Code'
-      id: checkout_source_code
-      uses: actions/checkout@v3
-      with:
-        token: ${{ inputs.repo_rw_token }}
-        ref: ${{ inputs.github_ref }}
     - name: Echo the input image name
       id: echo_the_image
       run: "echo \"Replacing existing image with: ${{ inputs.tagged_image }}\""
@@ -43,8 +29,3 @@ runs:
       id: echo_changes
       run: cat ${{ inputs.deployment_yaml_path }}
       shell: bash
-    - name: 'Commit the Change'
-      id: commit_the_change
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "Applies changes to image definition in ${{ inputs.deployment_yaml_path }}"
