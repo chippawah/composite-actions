@@ -19,6 +19,8 @@ inputs:
 outputs:
   tagged_image:
     value: ${{ steps.set_the_output.outputs.tagged_image }}
+    type: string
+    description: "The full image name including the resgistry, repo, and tag"
 runs:
   using: "composite"
   steps:
@@ -33,6 +35,6 @@ runs:
       id: set_the_output
       run: |
         CONCATENATED_VERSION=${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}
-        echo $CONCATENATED_VERSION
+        echo "Full image name: $CONCATENATED_VERSION"
         echo tagged_image=$CONCATENATED_VERSION >> $GITHUB_OUTPUT
       shell: bash
