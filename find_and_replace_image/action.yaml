@@ -27,6 +27,10 @@ runs:
       with:
         token: ${{ inputs.repo_rw_token }}
         ref: ${{ inputs.github_ref }}
+    - name: Echo the input image name
+      id: echo_the_image
+      run: echo ${{ inputs.tagged_image }}
+      shell: bash
     - name: 'Find and Replace Image Definition'
       id: find_and_replace
       uses: jacobtomlinson/gha-find-replace@v3
