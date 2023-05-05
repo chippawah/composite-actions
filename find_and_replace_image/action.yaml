@@ -32,7 +32,7 @@ runs:
       uses: jacobtomlinson/gha-find-replace@v3
       with:
         find: 'image: .*'
-        replace: 'image: "${{ inputs.tagged_image }}"'
+        replace: "image: \"${{ inputs.tagged_image }}\""
         include: ${{ inputs.deployment_yaml_path }}
         regex: true
     - name: 'Echo the changed file'
