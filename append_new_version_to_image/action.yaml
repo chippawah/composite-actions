@@ -29,20 +29,7 @@ runs:
         echo "Input Registry: ${{ inputs.registry }}"
         echo "Input Repository: ${{ inputs.repository }}"
       shell: bash
-    - name: Echo the output file var path
-      id: echo_the_output_file_var
-      run: |
-        echo "GITHUB_OUTPUT env var: $GITHUB_OUTPUT"
-      shell: bash
-    - name: Cat the output file before update
-      id: cat_the_output_var
-      run: cat $GITHUB_OUTPUT
-      shell: bash
     - name: Set the output
       id: set_the_output
-      run: echo "tagged_image=\"${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}\"" >> $GITHUB_OUTPUT
-      shell: bash
-    - name: Print the output file after update
-      id: cat_the_output_after_setting
-      run: cat $GITHUB_OUTPUT
+      run: echo "tagged_image=${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}" >> $GITHUB_OUTPUT
       shell: bash
