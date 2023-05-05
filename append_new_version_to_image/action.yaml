@@ -2,20 +2,20 @@ name: "Find and Replace Image"
 description: "Tags the git repository with the current version number"
 inputs:
   version:
-    description: 'The version for the tag'
+    description: "The version for the tag"
     type: string
     required: true
-    default: 'latest'
+    default: "latest"
   registry:
-    description: 'The registry where the image repository is.'
+    description: "The registry where the image repository is."
     type: string
     required: true
-    default: 'FOO_image_registry.com'
+    default: "FOO_image_registry.com"
   repository:
-    description: 'The repository name for the image.'
+    description: "The repository name for the image."
     type: string
     required: true
-    default: 'BAR_image_repo'
+    default: "BAR_image_repo"
 outputs:
   tagged_image:
     value: $${{ steps.set_the_output.outputs.tagged_image }}
