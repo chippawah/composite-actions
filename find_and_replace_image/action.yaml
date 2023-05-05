@@ -41,8 +41,10 @@ runs:
         regex: true
     - name: 'Echo the changed file'
       id: echo_changes
-      run: cat test_change_file.yaml
+      run: cat ${{ inputs.deployment_yaml_path }}
       shell: bash
     - name: 'Commit the Change'
       id: commit_the_change
       uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Applies changes to image definition in ${{ inputs.deployment_yaml_path }}"
