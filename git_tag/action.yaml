@@ -9,12 +9,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # - name: 'Checkout Source Code'
-    #   id: checkout_source_code
-    #   uses: actions/checkout@v3
-    #   with:
-    #     token: ${{ inputs.repo_rw_token }}
-    #     ref: ${{ inputs.github_ref }}
     - name: 'Tag Git repo with new version number'
       run: |
         echo ${{ inputs.repo_version }}
