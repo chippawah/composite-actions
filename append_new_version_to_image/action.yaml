@@ -1,5 +1,5 @@
-name: "Find and Replace Image"
-description: "Tags the git repository with the current version number"
+name: "Append Version to Image"
+description: "Concatenates the version and other image details into on string used for pulling the image"
 inputs:
   version:
     description: "The version for the tag"
