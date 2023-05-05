@@ -40,7 +40,7 @@ runs:
       shell: bash
     - name: Set the output
       id: set_the_output
-      run: echo "tagged_image=${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}" >> $GITHUB_OUTPUT
+      run: echo "tagged_image=\"${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}\"" >> $GITHUB_OUTPUT
       shell: bash
     - name: Print the output file after update
       id: cat_the_output_after_setting
