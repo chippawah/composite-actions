@@ -34,6 +34,6 @@ runs:
       run: |
         CONCATENATED_VERSION=${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}
         echo $CONCATENATED_VERSION
-        echo "tagged_image=$(echo CONCATENATED_VERSION)" >> $GITHUB_OUTPUT
+        echo "tagged_image=$(echo $CONCATENATED_VERSION)" >> $GITHUB_OUTPUT
         cat $GITHUB_OUTPUT
       shell: bash
