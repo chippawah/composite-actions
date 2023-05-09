@@ -17,8 +17,8 @@ inputs:
     required: true
     default: "BAR_image_repo"
 outputs:
-  tagged_image:
-    value: ${{ steps.set_the_output.outputs.tagged_image }}
+  tagged-image:
+    value: ${{ steps.set_the_output.outputs.tagged-image }}
 runs:
   using: "composite"
   steps:
@@ -34,5 +34,5 @@ runs:
       run: |
         CONCATENATED_VERSION=${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.version }}
         echo "Full image name: $CONCATENATED_VERSION"
-        echo tagged_image=$CONCATENATED_VERSION >> $GITHUB_OUTPUT
+        echo tagged-image=$CONCATENATED_VERSION >> $GITHUB_OUTPUT
       shell: bash
