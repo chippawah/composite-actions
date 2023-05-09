@@ -22,6 +22,10 @@ on:
         required: true
         type: string
         default: 'kustomize/overlays/dev/deployment.yaml'
+    secrets:
+      COMMIT_TOKEN:
+        required: true
+        description: "A repo scoped token capable of reading repo contents and commiting to protected branches"
 jobs:
   output_an_image_name:
     runs-on: ubuntu-latest
