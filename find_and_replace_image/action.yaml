@@ -5,7 +5,7 @@ inputs:
     required: true
     type: string
     description: 'The full image name including registry, repo, and tag.'
-  deployment_yaml_path:
+  deployment-yaml-path:
     description: 'The path to the deployment.yaml file that defines the image used for the container'
     required: true
     type: string
@@ -23,9 +23,9 @@ runs:
       with:
         find: 'image: .*'
         replace: "image: \"${{ inputs.tagged-image }}\""
-        include: ${{ inputs.deployment_yaml_path }}
+        include: ${{ inputs.deployment-yaml-path }}
         regex: true
     - name: 'Echo the changed file'
       id: echo_changes
-      run: "cat ${{ inputs.deployment_yaml_path }}"
+      run: "cat ${{ inputs.deployment-yaml-path }}"
       shell: bash
