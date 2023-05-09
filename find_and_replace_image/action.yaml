@@ -27,5 +27,5 @@ runs:
         regex: true
     - name: 'Echo the changed file'
       id: echo_changes
-      run: cat ${{ inputs.deployment_yaml_path }}
+      run: "cat ${{ inputs.deployment_yaml_path }}"
       shell: bash

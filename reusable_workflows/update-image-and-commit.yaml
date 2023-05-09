@@ -1,0 +1,39 @@
+name: update-image-and-commit-change
+on:
+  workflow_call:
+    inputs:
+      tagged-image:
+        required: true
+        type: string
+        description: 'The full image name including registry, repo, and tag.'
+      deployment-yaml-path:
+        description: 'The path to the deployment.yaml file that defines the image used for the container'
+        required: true
+        type: string
+        default: 'kustomize/overlays/dev/deployment.yaml'
+    secrets:
+      COMMIT_TOKEN:
+        required: true
+        description: "A repo scoped token with the ability to read/ write contents. Used to checkout the repo and commit the changes after updating the image."
+
+jobs:
+  update_image_in_kustomize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Source Code'
+        id: checkout_source_code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.COMMIT_TOKEN }}
+          ref: ${{ github.ref }}
+      - name: Update the image definition in the YAML
+        id: find_and_replace_image
+        uses: chippawah/composite-actions/find_and_replace_image@main
+        with:
+          tagged-image: ${{ inputs.tagged-image }}
+          deployment-yaml-path: ${{ inputs.deployment-yaml-path }}
+      - name: 'Commit the Change'
+        id: commit_the_change
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Applies changes to image definition in ${{ inputs.deployment-yaml-path }}"
