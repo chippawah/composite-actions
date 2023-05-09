@@ -1,0 +1,28 @@
+name: tag-the-repo
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'The version for the image'
+        type: string
+        required: true
+        default: 'x.x.x'
+    secrets:
+        COMMIT_TOKEN:
+          required: true
+          description: "The token that will be used to checkout the repo and commit a new tag to it."
+jobs:
+  tag_the_repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Source Code'
+        id: checkout_source_code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.COMMIT_TOKEN }}
+          ref: ${{ github.ref }}
+      - name: 'Add and push new tag'
+        id: tag_the_repo
+        uses: chippawah/composite-actions/git_tag@main
+        with:
+          repo_version: ${{ inputs.version }}

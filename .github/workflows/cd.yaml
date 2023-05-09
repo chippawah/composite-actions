@@ -1,0 +1,51 @@
+name: cd
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'The version for the image'
+        type: string
+        required: true
+        default: 'latest'
+      registry:
+        description: 'The registry where the image repository is.'
+        type: string
+        required: true
+        default: 'FOO_image_registry.foobar-hosters.com'
+      repository:
+        description: 'The repository name for the image.'
+        type: string
+        required: true
+        default: 'BAR_image_repo'
+      deployment-yaml-path:
+        description: 'The path to the deployment.yaml file that defines the image used for the container'
+        required: true
+        type: string
+        default: 'kustomize/overlays/dev/deployment.yaml'
+jobs:
+  output_an_image_name:
+    runs-on: ubuntu-latest
+    outputs:
+      tagged-image: ${{ steps.build_image_name.outputs.tagged-image }}
+    steps:
+      - name: Build Image Full Name
+        id: build_image_name
+        uses: chippawah/composite-actions/append_new_version_to_image@main
+        with:
+          version: ${{ inputs.version }}
+          registry: ${{ inputs.registry }}
+          repository: ${{ inputs.repository }}
+  update_kustomize_image:
+    uses: chippawah/composite-actions/.github/workflows/update-image-and-commit.yaml@main
+    needs: output_an_image_name
+    with:
+      tagged-image: ${{ needs.output_an_image_name.outputs.tagged-image }}
+      deployment-yaml-path: ${{ inputs.deployment-yaml-path }}
+    secrets:
+      COMMIT_TOKEN: ${{ secrets.COMMIT_TOKEN }}   
+  tag_the_repo:
+    uses: chippawah/composite-actions/.github/workflows/tag-the-repo.yaml@main
+    with:
+      version: ${{ inputs.version }}
+    secrets:
+      COMMIT_TOKEN: ${{ secrets.COMMIT_TOKEN }}   
