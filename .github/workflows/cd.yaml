@@ -52,4 +52,4 @@ jobs:
     with:
       version: ${{ inputs.version }}
     secrets:
-      COMMIT_TOKEN: ${{ secrets.COMMIT_TOKEN }}   
+      COMMIT_TOKEN: ${{ secrets.COMMIT_TOKEN }}
